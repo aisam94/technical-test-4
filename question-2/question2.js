@@ -23,6 +23,26 @@ app.get('/hash', (req, res) => {
     }, delayResponse)
 })
 
+// endpoint #2
+app.get('/odd-num-hash', async (req, res) => {
+    let hash = '';
+    let lastChar = '';
+
+    async function getHash() {
+        const data = await axios.get(`http://localhost:${port}/hash`)
+            .then((response) => {
+                return response.data;
+            })
+        return data.hashString;
+    }
+
+    while (lastChar === '' || isNaN(lastChar) || lastChar % 2 === 0) {
+        hash = await getHash();
+        lastChar = hash.slice(-1);
+    }
+    res.json({ hash });
+})
+
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
 })
