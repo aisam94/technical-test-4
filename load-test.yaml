@@ -1,0 +1,13 @@
+config:
+  target: "http://localhost:5000"
+  phases:
+    - duration: 60
+      arrivalRate: 1
+scenarios:
+  - name: "Load test endpoint #2"
+    flow:
+      - get:
+          url: "/odd-num-hash"
+          capture:
+            json: "$.hash"
+            as: "hash"
